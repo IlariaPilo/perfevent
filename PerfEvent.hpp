@@ -159,9 +159,8 @@ struct PerfEvent {
    }
 
    static void printCounter(std::ostream& headerOut, std::ostream& dataOut, std::string name, std::string counterValue,bool addComma=true) {
-     auto width=std::max(name.length(),counterValue.length());
-     headerOut << std::setw(static_cast<int>(width)) << name << (addComma ? "," : "") << " ";
-     dataOut << std::setw(static_cast<int>(width)) << counterValue << (addComma ? "," : "") << " ";
+     headerOut << name << (addComma ? "," : "");
+     dataOut << counterValue << (addComma ? "," : ""):;
    }
 
    template <typename T>
