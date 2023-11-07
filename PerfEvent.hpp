@@ -171,12 +171,12 @@ struct PerfEvent {
      PerfEvent::printCounter(headerOut,dataOut,name,stream.str(),addComma);
    }
 
-   void printReport(std::ostream& out, uint64_t normalizationConstant) {
+   void printReport(std::ostream& out, uint64_t normalizationConstant, bool printHeader = true, bool printData = true) {
      std::stringstream header;
      std::stringstream data;
      printReport(header,data,normalizationConstant);
-     out << header.str() << std::endl;
-     out << data.str() << std::endl;
+     if (printHeader) out << header.str() << std::endl;
+     if (printData) out << data.str() << std::endl;
    }
 
    void printReport(std::ostream& headerOut, std::ostream& dataOut, uint64_t normalizationConstant) {
