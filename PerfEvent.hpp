@@ -68,7 +68,7 @@ struct PerfEvent {
    std::chrono::time_point<std::chrono::steady_clock> startTime;
    std::chrono::time_point<std::chrono::steady_clock> stopTime;
 
-   PerfEvent() {
+   PerfEvent(bool silent = false) {
       registerCounter("cycles", PERF_TYPE_HARDWARE, PERF_COUNT_HW_CPU_CYCLES);
       registerCounter("kcycles", PERF_TYPE_HARDWARE, PERF_COUNT_HW_CPU_CYCLES, KERNEL);
       registerCounter("instructions", PERF_TYPE_HARDWARE, PERF_COUNT_HW_INSTRUCTIONS);
@@ -82,7 +82,7 @@ struct PerfEvent {
          auto& event = events[i];
          event.fd = static_cast<int>(syscall(__NR_perf_event_open, &event.pe, 0, -1, -1, 0));
          if (event.fd < 0) {
-            std::cerr << "Error opening counter " << names[i] << std::endl;
+            if (!silent) std::cerr << "Error opening counter " << names[i] << std::endl;
             events.resize(0);
             names.resize(0);
             return;
